@@ -1,0 +1,15 @@
+name: DE-nf
+
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  - star=2.7.3a
+  - htseq=0.13.5
+  - samtools=1.9
+  - fastqc=0.11  
+  - multiqc=1.8
+  - bioconductor-deseq2=1.30.0-0
+
