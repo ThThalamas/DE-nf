@@ -10,7 +10,7 @@ log.info "--------------------------------------------------------"
 if (params.help) {
     log.info "--------------------------------------------------------"
     log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker "
-    log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf -profile docker --input ~/media/bobo/Seagate/all/ --STAR_Index ~/media/bobo/Seagate/STARIndex"
+    log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf -profile docker --input /media/bobo/Seagate/all/ --STAR_Index ~/media/bobo/Seagate/STARIndex"
     log.info "--------------------------------------------------------"
     log.info ""
     log.info "nextflow run DE.nf [-r vX.X -profile singularity] [OPTIONS]"
