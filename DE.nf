@@ -50,20 +50,21 @@ params.result = null
 // -- Pipeline :
 process Mapping{ 
   //publishDir params.result+'!{params.result}/mapping/', mode: 'move'
+  cpus params.thread
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
 
   output:
-  file "*.Aligned.out.sam" into Mapping
-  file "*.Log.out" into Mapping_Log
+  file "*Aligned.out.sam" into Mapping
+  file "*Log.out" into Mapping_Log
   
   shell:
   '''
   #Mapping analyse :
   ulimit -v 27598325157
   for file in *; do
-    STAR \
+    /data/home/blipinski/projetS3/STAR-2.7.7a/source/./STAR \
     --runThreadN !{params.thread} \
     --genomeDir !{params.STAR_Index} \
     --readFilesCommand gunzip -c \
@@ -76,19 +77,20 @@ process Mapping{
 
 
 process Intersection{ 
-  publishDir params.result+'!{params.result}/intersection/', mode: 'move'
+  //publishDir params.result+'!{params.result}/intersection/', mode: 'move'
   
   input:
-  //file data from Mapping
+  file data from Mapping
   
   output:
-  //file "STAR/" into Intersect
+  file "*.txt" into Intersect
   
   shell:
   '''
   #Intersection analyse :
-  #htseq-count -m union --stranded=no -r pos $4 $Annotation > $5
-  #htseq-count --version
+  for file in *; do
+    htseq-count --stranded=yes -n !{params.thread} --mode=union $file !{params.annotation} > ${file}_intersect.txt
+  done
   '''
 }
 
