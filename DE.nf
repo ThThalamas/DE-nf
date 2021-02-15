@@ -10,6 +10,7 @@ log.info "--------------------------------------------------------"
 if (params.help) {
     log.info "--------------------------------------------------------"
     log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker "
+    log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf -profile docker --input ~/media/bobo/Seagate/all/ --STAR_Index ~/media/bobo/Seagate/STARIndex"
     log.info "--------------------------------------------------------"
     log.info ""
     log.info "nextflow run DE.nf [-r vX.X -profile singularity] [OPTIONS]"
@@ -49,17 +50,24 @@ process Mapping{
   //publishDir params.result+'!{params.result}/mapping/', mode: 'move'
   
   input:
-  //file data from Channel.fromPath(params.input+'*').collect()
+  file data from Channel.fromPath(params.input+'*').collect()
 
   output:
-  //file "kissplice*" into Mapping
+  file "*.Aligned.out.sam" into Mapping
+  file "*.Log.out" into Mapping_Log
   
   shell:
   '''
   #Mapping analyse :
-  #STAR --runThreadN !{params.thread} --outFileNamePrefix $3 --sjdbGTFfile !{params.annotation} --genomeDir !{params.STAR_Index} --readFilesIn $1 $2
-  STAR --version
-  ls
+  for file in *; do
+    STAR \
+    --runThreadN !{params.thread} \
+    --genomeDir !{params.STAR_Index} \
+    --readFilesCommand gunzip -c \
+    --readFilesIn $file \
+    --outFileNamePrefix $file \
+    --outSAMunmapped Within
+  done
   '''
 }
 

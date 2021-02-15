@@ -6,7 +6,7 @@ channels:
   - defaults
 
 dependencies:
-  - star=2.7.3a
+  - star=2.7.4a
   - htseq=0.13.5
   - samtools=1.9
   - fastqc=0.11  
