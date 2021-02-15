@@ -12,6 +12,7 @@ if (params.help) {
     log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker "
     log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf -profile docker --input /media/bobo/Seagate/all/ --STAR_Index ~/media/bobo/Seagate/STARIndex"
     log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf --input /media/bobo/Seagate/all/ --STAR_Index /media/bobo/Seagate/STARIndex/"
+    log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker --input /data/home/blipinski/projetS3/data/ --STAR_Index /tmp/BTC_Projet/STARIndex/"
     log.info "--------------------------------------------------------"
     log.info ""
     log.info "nextflow run DE.nf [-r vX.X -profile singularity] [OPTIONS]"
@@ -62,7 +63,7 @@ process Mapping{
   #Mapping analyse :
   ulimit -v 27598325157
   for file in *; do
-    /home/bobo/Téléchargements/STAR-2.7.7a/source/./STAR \
+    STAR \
     --runThreadN !{params.thread} \
     --genomeDir !{params.STAR_Index} \
     --readFilesCommand gunzip -c \
