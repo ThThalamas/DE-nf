@@ -9,22 +9,20 @@ log.info "--------------------------------------------------------"
 
 if (params.help) {
     log.info "--------------------------------------------------------"
-    log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker "
-    log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf -profile docker --input /media/bobo/Seagate/all/ --STAR_Index ~/media/bobo/Seagate/STARIndex"
-    log.info "  USAGE : sudo nextflow run ../DE-nf/DE.nf --input /media/bobo/Seagate/all/ --STAR_Index /media/bobo/Seagate/STARIndex/"
-    log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker --input /data/home/blipinski/projetS3/data/ --STAR_Index /tmp/BTC_Projet/STARIndex/"
+    log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf -profile docker --input /data/ --STAR_Index /STARIndex/ --output /output/"
     log.info "--------------------------------------------------------"
     log.info ""
     log.info "nextflow run DE.nf [-r vX.X -profile singularity] [OPTIONS]"
     log.info ""
     log.info "Mandatory arguments:"
     log.info ""
-    log.info "--input                      FOLDER                      Folder where you can find your data (fasta/fastq files)"
+    log.info "--input                      FOLDER                      Folder where you can find your data (fasta/fastq files)."
+    log.info "--output                      FOLDER                      Folder where you want to find your result."
     log.info ""
     log.info "Optional arguments:"
     log.info "--<OPTION>                      <TYPE>                      <DESCRIPTION>"
-    log.info "--STAR_Index                      FOLDER                      Folder where you can find the STAR index"
-    log.info "--annotation                      FOLDER                      Folder where you can find your annotation"
+    log.info "--STAR_Index                      FOLDER                      Folder where you can find the STAR index."
+    log.info "--annotation                      FOLDER                      Folder where you can find the annotation to use."
     log.info "--thread                      INT                      Number of thread to use."
     
 
@@ -45,11 +43,11 @@ params.annotation = 1
 
 // -- Path :
 params.input = null
-params.result = null
+params.output = null
 
 // -- Pipeline :
 process Mapping{ 
-  //publishDir params.result+'!{params.result}/mapping/', mode: 'move'
+  publishDir params.output+'!{params.output}/mapping/', mode: 'move'
   cpus params.thread
   
   input:
@@ -77,7 +75,7 @@ process Mapping{
 
 
 process Intersection{ 
-  //publishDir params.result+'!{params.result}/intersection/', mode: 'move'
+  publishDir params.output+'!{params.output}/intersect/', mode: 'move'
   
   input:
   file data from Mapping
@@ -95,7 +93,7 @@ process Intersection{
 }
 
 process DE{ 
-  publishDir params.result+'!{params.result}/', mode: 'copy'
+  publishDir params.output+'!{params.output}/', mode: 'copy'
   
   input:
   //file data from Intersect
