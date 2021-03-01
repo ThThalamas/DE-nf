@@ -47,7 +47,7 @@ params.output = null
 
 // -- Pipeline :
 process Mapping{ 
-  publishDir params.output+'!{params.output}/mapping/', mode: 'move'
+  publishDir params.output+'mapping/', mode: 'copy'
   cpus params.thread
   
   input:
@@ -75,7 +75,7 @@ process Mapping{
 
 
 process Intersection{ 
-  publishDir params.output+'!{params.output}/intersect/', mode: 'move'
+  publishDir params.output+'intersect/', mode: 'copy'
   
   input:
   file data from Mapping
