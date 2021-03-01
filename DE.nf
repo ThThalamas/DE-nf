@@ -96,7 +96,7 @@ process DE{
   publishDir params.output+'!{params.output}/', mode: 'copy'
   
   input:
-  //file data from Intersect
+  file data from Intersect
   
   output:
   //file "STAR/" into Result
@@ -104,5 +104,20 @@ process DE{
   shell:
   '''
   #Differancial expression analyses :
+  files=(*)
+  awk '{print $1}' ${files[0]} > AAAA.txt
+
+  for file in *_intersect.txt; do
+    awk '{print $2}' $file > ${file}.tmp
+    rm $file
+    mv ${file}.tmp $file 
+    tail -n +2 "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+    echo "${file%%.*}" > ${file}.name
+    cat ${file}.name ${file} > ${file}.tmp && mv ${file}.tmp ${file}
+    rm ${file}.name
+  done
+
+  paste -d "\t" * > finale.txt
+  rm AAAA.txt
   '''
 }
