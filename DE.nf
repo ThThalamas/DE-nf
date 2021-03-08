@@ -49,7 +49,7 @@ params.output = null
 
 // -- Pipeline :
 process Mapping{ 
-  publishDir params.output+'!{params.output}/mapping/', mode: 'copy'
+  publishDir params.output+'/mapping/', mode: 'copy'
   cpus params.thread
   
   input:
@@ -77,7 +77,7 @@ process Mapping{
 
 
 process Intersection{ 
-  publishDir params.output+'!{params.output}/intersect/', mode: 'copy'
+  publishDir params.output+'/intersect/', mode: 'copy'
   
   input:
   file data from Mapping
@@ -95,7 +95,7 @@ process Intersection{
 }
 
 process Merge_result{ 
-  publishDir params.output+'!{params.output}/merge/', mode: 'copy'
+  publishDir params.output+'/merge/', mode: 'copy'
   
   input:
   file data from Intersect
@@ -127,18 +127,18 @@ process Merge_result{
 
 if(params.R=="on"){
   process DE{ 
-    publishDir params.output+'!{params.output}/R/', mode: 'copy'
+    publishDir params.output+'/R/', mode: 'copy'
     
     input:
-    file data from Result
-    file data from Channel.fromPath(params.input+'Metadata.xls').collect()
+    file data from Result.colect()
+    file data from Channel.fromPath(params.input+'data/Metadata.xls').collect()
     
     output:
-    //file "STAR/" into Result
+    file "*.pdf" into Result_DE
     
     shell:
     '''
-    Rscript bin/DE.R finale.txt Metadata.xls
+    Rscript !{baseDir}/bin/DE.R finale.txt Metadata.xls
     '''
     }
 }
