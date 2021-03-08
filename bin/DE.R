@@ -41,7 +41,7 @@ DEA_analysis <- function(matrix, metadata){
   
   #intersect with data already processed
   colData <- colData[which(colData$`Name of sample` %in% intersect(colData$`Name of sample`, colnames(countData))),]
-  colData <- colData[which(colData$`Sex`=='Female'),]
+  #colData <- colData[which(colData$`Sex`=='Male'),]
   
   countData <- countData[,which(colnames(countData) %in% intersect(colData$`Name of sample`, colnames(countData)))]
   
