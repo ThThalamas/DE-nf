@@ -23,6 +23,7 @@ if (params.help) {
     log.info "--<OPTION>                      <TYPE>                      <DESCRIPTION>"
     log.info "--STAR_Index                      FOLDER                      Folder where you can find the STAR index."
     log.info "--annotation                      FOLDER                      Folder where you can find the annotation to use."
+    log.info "--R                      STRING                      'on'/'off' : Chose to use or not the standard R analyses from the pipeline."
     log.info "--thread                      INT                      Number of thread to use."
     
 
@@ -40,6 +41,7 @@ if (params.help) {
 params.STAR_Index = null
 params.thread = 1
 params.annotation = 1
+params.R = "off"
 
 // -- Path :
 params.input = null
@@ -47,7 +49,7 @@ params.output = null
 
 // -- Pipeline :
 process Mapping{ 
-  publishDir params.output+'!{params.output}/mapping/', mode: 'move'
+  publishDir params.output+'!{params.output}/mapping/', mode: 'copy'
   cpus params.thread
   
   input:
@@ -75,7 +77,7 @@ process Mapping{
 
 
 process Intersection{ 
-  publishDir params.output+'!{params.output}/intersect/', mode: 'move'
+  publishDir params.output+'!{params.output}/intersect/', mode: 'copy'
   
   input:
   file data from Mapping
@@ -92,14 +94,14 @@ process Intersection{
   '''
 }
 
-process DE{ 
-  publishDir params.output+'!{params.output}/', mode: 'copy'
+process Merge_result{ 
+  publishDir params.output+'!{params.output}/merge/', mode: 'copy'
   
   input:
   file data from Intersect
   
   output:
-  //file "STAR/" into Result
+  file "finale.txt" into Result
   
   shell:
   '''
@@ -120,4 +122,23 @@ process DE{
   paste -d "\t" * > finale.txt
   rm AAAA.txt
   '''
+}
+
+
+if(params.R=="on"){
+  process DE{ 
+    publishDir params.output+'!{params.output}/R/', mode: 'copy'
+    
+    input:
+    file data from Result
+    file data from Channel.fromPath(params.input+'Metadata.xls').collect()
+    
+    output:
+    //file "STAR/" into Result
+    
+    shell:
+    '''
+    Rscript bin/DE.R finale.txt Metadata.xls
+    '''
+    }
 }
