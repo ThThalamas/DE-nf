@@ -101,6 +101,7 @@ process Mapping{
       --outSAMunmapped Within
     done
     '''
+    }
 }
 
 
