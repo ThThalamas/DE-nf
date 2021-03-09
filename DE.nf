@@ -46,8 +46,9 @@ params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_prim
 // -- Option :
 params.R = "off"
 params.thread = 1
-params.STAR_Index = null
+params.STAR_Index = "off"
 params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
+
 
 // -- Pipeline :
 process Mapping{ 
@@ -56,15 +57,14 @@ process Mapping{
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
-  file data from Channel.fromPath(params.STAR_Index).collect()
+  //file data from Channel.fromPath(params.STAR_Index).collect()
 
   output:
   file "*Aligned.out.sam" into Mapping_sam
   file "*Log.out" into Mapping_Log
-  file "*last" into Mapping_index
   
   shell:
-  if(params.STAR_Index==null) {
+  if(params.STAR_Index=="off") {
     '''
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
@@ -75,17 +75,25 @@ process Mapping{
       --sjdbOverhang 74 \
       --genomeSAsparseD 3
 
+    mkdir data/
+    mv *gz data/
+    cd data/ 
+
     #Mapping analyse :
     ulimit -v 27598325157
     for file in *; do
       STAR \
       --runThreadN !{params.thread} \
-      --genomeDir STARIndex_last/ \
+      --genomeDir ../STARIndex_last/ \
       --readFilesCommand gunzip -c \
       --readFilesIn $file \
       --outFileNamePrefix $file \
       --outSAMunmapped Within
     done
+
+    mv * ../.
+    cd ..
+    rm -r data/
     '''
   } else {
     '''
@@ -118,7 +126,7 @@ process Intersection{
   '''
   #Intersection analyse :
   for file in *; do
-    htseq-count --stranded=yes -n !{params.thread} --mode=union $file !{params.GTF} > ${file}_intersect.txt
+    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{params.GTF} > ${file}_intersect.txt
   done
   '''
 }
@@ -159,15 +167,15 @@ if(params.R=="on"){
     publishDir params.output+'/R/', mode: 'copy'
     
     input:
-    file data from Result.colect()
-    file data from Channel.fromPath(params.input+'data/Metadata.xls').collect()
+    file data from Result.collect()
+    //file data from Channel.fromPath(params.input+'data/Metadata.xls').collect()
     
     output:
     file "*.pdf" into Result_DE
     
     shell:
     '''
-    Rscript !{baseDir}/bin/DE.R finale.txt Metadata.xls
+    Rscript !{baseDir}/bin/DE.r finale.txt !{baseDir}/data/Metadata.xls
     '''
     }
 }
