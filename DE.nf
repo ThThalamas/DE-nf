@@ -37,15 +37,17 @@ if (params.help) {
     log.info "help:                               ${params.help}"
 }
 
-// -- Option :
-params.STAR_Index = null
-params.thread = 1
-params.annotation = 1
-params.R = "off"
 
 // -- Path :
 params.input = null
 params.output = null
+params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
+
+// -- Option :
+params.R = "off"
+params.thread = 1
+params.STAR_Index = null
+params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.gtf"
 
 // -- Pipeline :
 process Mapping{ 
@@ -54,25 +56,51 @@ process Mapping{
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
+  file data from Channel.fromPath(params.STAR_Index).collect()
 
   output:
   file "*Aligned.out.sam" into Mapping
   file "*Log.out" into Mapping_Log
+  file "*last" into Mapping_index
   
   shell:
-  '''
-  #Mapping analyse :
-  ulimit -v 27598325157
-  for file in *; do
-    /data/home/blipinski/projetS3/STAR-2.7.7a/source/./STAR \
-    --runThreadN !{params.thread} \
-    --genomeDir !{params.STAR_Index} \
-    --readFilesCommand gunzip -c \
-    --readFilesIn $file \
-    --outFileNamePrefix $file \
-    --outSAMunmapped Within
-  done
-  '''
+  if(params.STAR_Index==null) {
+    '''
+    mkdir STARIndex_last/
+    STAR --runThreadN !{params.thread} \
+      --runMode genomeGenerate \
+      --genomeDir STARIndex_last/ \
+      --genomeFastaFiles !{params.FNA} \
+      --sjdbGTFfile !{params.GTF} \
+      --sjdbOverhang 74 \
+      --genomeSAsparseD 3
+
+    #Mapping analyse :
+    ulimit -v 27598325157
+    for file in *; do
+      STAR \
+      --runThreadN !{params.thread} \
+      --genomeDir STARIndex_last/ \
+      --readFilesCommand gunzip -c \
+      --readFilesIn $file \
+      --outFileNamePrefix $file \
+      --outSAMunmapped Within
+    done
+    '''
+  } else {
+    '''
+    #Mapping analyse :
+    ulimit -v 27598325157
+    for file in *; do
+      STAR \
+      --runThreadN !{params.thread} \
+      --genomeDir !{params.STAR_Index} \
+      --readFilesCommand gunzip -c \
+      --readFilesIn $file \
+      --outFileNamePrefix $file \
+      --outSAMunmapped Within
+    done
+    '''
 }
 
 
@@ -89,7 +117,7 @@ process Intersection{
   '''
   #Intersection analyse :
   for file in *; do
-    htseq-count --stranded=yes -n !{params.thread} --mode=union $file !{params.annotation} > ${file}_intersect.txt
+    htseq-count --stranded=yes -n !{params.thread} --mode=union $file !{params.GTF} > ${file}_intersect.txt
   done
   '''
 }

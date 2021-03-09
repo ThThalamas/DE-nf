@@ -15,7 +15,8 @@ library(tidyverse)
 remplace <- function(name){name <- gsub("-", ".", name)} 
 split <- function(name){name <- str_split(name,"_")[[1]][1]}
 
-
+matrix <- "/home/boris/Bureau/projet/DE-nf/result/finale.txt" #matrix = as.character(commandArgs(TRUE)[1])
+metadata <- "/home/boris/Bureau/projet/DE-nf/data/Metadata.xls" #metadata = as.character(commandArgs(TRUE)[2])
 ###############################################################################################################################################
 ## -- DESeq2 annalyse -- ##
 ###########################
@@ -41,7 +42,12 @@ DEA_analysis <- function(matrix, metadata){
   
   #intersect with data already processed
   colData <- colData[which(colData$`Name of sample` %in% intersect(colData$`Name of sample`, colnames(countData))),]
-  #colData <- colData[which(colData$`Sex`=='Male'),]
+  colData <- colData[which(colData$`Sex`=='Male'),]
+  #colData <- colData[which(colData$`Modality`!="Gnotobiotic Microbacterium oxydans"),]
+  #colData <- colData[which(colData$`Modality`!="Gnotobiotic Carnobacterium maltaromatycum"),]
+  #colData <- colData[which(colData$`Modality`!= "Gnotobiotic Oerskovia"),]
+  colData <- colData[which(colData$`Modality`!= "Conventional"),]
+  #colData <- colData[which(colData$`Modality`!= "Axenic"),]
   
   countData <- countData[,which(colnames(countData) %in% intersect(colData$`Name of sample`, colnames(countData)))]
   
@@ -53,15 +59,15 @@ DEA_analysis <- function(matrix, metadata){
 
   return(dataset)
 }
-matrix <- "/home/boris/Bureau/projet/DE-nf/result/finale.txt" #matrix = as.character(commandArgs(TRUE)[1])
-metadata <- "/home/boris/Bureau/projet/DE-nf/data/Metadata.xls" #metadata = as.character(commandArgs(TRUE)[2])
+
 dataset <- DEA_analysis(matrix, metadata)
 rld <- rlog(dataset, blind = T)
 
 # Top Genes Results
 DEA_result <- function(dataset, group, reference, group2){
-  if (group != "Sex"){result <- results(dataset, c(group, reference, group2), pAdjustMethod = "BH")}
-  else{result <- results(dataset, pAdjustMethod = "BH")}
+  #if (group != "Sex"){result <- results(dataset, c(group, reference, group2), pAdjustMethod = "BH")}
+  #else{result <- results(dataset, pAdjustMethod = "BH")}
+  result <- results(dataset, pAdjustMethod = "BH")
   result <- result[complete.cases(result),]
   result <- result[order(result$padj),]
   
@@ -111,3 +117,4 @@ abline(h = c(-1,1), col = "blue", lty = 2)
 mtext(c(paste("-2 fold"), paste("+ 2 fold")), side = 4, at = c(-1, 1), cex = 0.8, line = 0.5, col = "blue")
 
 dev.off()
+

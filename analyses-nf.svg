@@ -20,36 +20,6 @@
    width="210mm">
   <defs
      id="defs2">
-    <rect
-       x="-148.49025"
-       y="261.55496"
-       width="246.52878"
-       height="82.826632"
-       id="rect1365" />
-    <rect
-       x="-147.58646"
-       y="363.90419"
-       width="236.21977"
-       height="103.03293"
-       id="rect1359" />
-    <rect
-       x="-151.34635"
-       y="387.68088"
-       width="246.31376"
-       height="130.54116"
-       id="rect1353" />
-    <rect
-       id="rect1178"
-       height="19.087616"
-       width="41.276051"
-       y="53.105575"
-       x="134.00999" />
-    <rect
-       id="rect1027"
-       height="29.546653"
-       width="80.531661"
-       y="-69.882398"
-       x="211.02202" />
     <linearGradient
        osb:paint="solid"
        id="linearGradient12641">
@@ -120,7 +90,7 @@
      showgrid="false"
      inkscape:current-layer="g13134"
      inkscape:document-units="mm"
-     inkscape:cy="689.5439"
+     inkscape:cy="509.93378"
      inkscape:cx="467.14954"
      inkscape:zoom="0.89081843"
      inkscape:pageshadow="2"
