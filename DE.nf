@@ -41,13 +41,13 @@ if (params.help) {
 // -- Path :
 params.input = null
 params.output = null
-params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
+params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.gtf"
 
 // -- Option :
 params.R = "off"
 params.thread = 1
 params.STAR_Index = null
-params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.gtf"
+params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
 
 // -- Pipeline :
 process Mapping{ 
@@ -59,7 +59,7 @@ process Mapping{
   file data from Channel.fromPath(params.STAR_Index).collect()
 
   output:
-  file "*Aligned.out.sam" into Mapping
+  file "*Aligned.out.sam" into Mapping_sam
   file "*Log.out" into Mapping_Log
   file "*last" into Mapping_index
   
@@ -108,7 +108,7 @@ process Intersection{
   publishDir params.output+'/intersect/', mode: 'copy'
   
   input:
-  file data from Mapping
+  file data from Mapping_sam
   
   output:
   file "*.txt" into Intersect
