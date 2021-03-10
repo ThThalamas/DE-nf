@@ -91,7 +91,7 @@ topGenes_sex <- assay(rld)[rownames(sex_result),]
 ###############################################################################################################################################
 ## -- Figure time -- ##
 #######################
-pdf("/home/boris/Bureau/projet/DE-nf/result/Result.pdf")
+pdf("Result.pdf")
 
 # Dendrogramme
 rlog.norm.counts <- assay(rld)
