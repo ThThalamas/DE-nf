@@ -69,7 +69,7 @@ process Mapping{
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
       --runMode genomeGenerate \
-      --genomeDir STARIndex_last/ \
+      --genomeDir STARIndex_last \
       --genomeFastaFiles !{params.FNA} \
       --sjdbGTFfile !{params.GTF} \
       --sjdbOverhang 74 \
