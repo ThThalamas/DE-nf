@@ -44,8 +44,8 @@ params.GTF = ""
 // -- Option :
 params.R = "off"
 params.thread = 1
-params.STAR_Index = "off"
-params.FNA = ""
+params.STAR_Index = null
+params.FNA = params.STAR_Index
 //params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
 params.metadata = null
 //params.metadata = "!{baseDir}/data/Metadata.xls"
@@ -58,9 +58,8 @@ process Mapping{
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
-  //file GTF from Channel.fromPath(params.GTF).collect()
-  //file FNA from Channel.fromPath(params.FNA).collect()
-  file STAR_Index from Channel.fromPath(params.STAR_Index).collect()
+  file GTF from Channel.fromPath(params.GTF).collect()
+  file FNA from Channel.fromPath(params.FNA).collect()
 
   output:
   file "*Aligned.out.sam" into Mapping_sam
@@ -105,7 +104,7 @@ process Mapping{
     for file in *; do
       STAR \
       --runThreadN !{params.thread} \
-      --genomeDir !{STAR_Index} \
+      --genomeDir !{FNA} \
       --readFilesCommand gunzip -c \
       --readFilesIn $file \
       --outFileNamePrefix $file \
