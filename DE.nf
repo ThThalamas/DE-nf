@@ -73,7 +73,7 @@ process Mapping{
       --genomeFastaFiles !{params.FNA} \
       --sjdbGTFfile !{params.GTF} \
       --sjdbOverhang 74 \
-      --genomeSAsparseD 6
+      --genomeSAsparseD 12
 
     mkdir data/
     mv *gz data/
@@ -84,7 +84,7 @@ process Mapping{
     for file in *; do
       STAR \
       --runThreadN !{params.thread} \
-      --genomeDir ../STARIndex_last/ \
+      --genomeDir ../STARIndex_last \
       --readFilesCommand gunzip -c \
       --readFilesIn $file \
       --outFileNamePrefix $file \
