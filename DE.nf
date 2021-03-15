@@ -47,7 +47,8 @@ params.thread = 1
 params.STAR_Index = "off"
 params.FNA = null
 //params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
-params.metadata = "!{baseDir}/data/Metadata.xls"
+params.metadata = null
+//params.metadata = "!{baseDir}/data/Metadata.xls"
 
 
 // -- Pipeline :
@@ -60,7 +61,7 @@ process Mapping{
 
   output:
   file "*Aligned.out.sam" into Mapping_sam
-  file "*Log.out" into Mapping_Log
+  file "*Log*" into Mapping_Log
   
   shell:
   if(params.STAR_Index=="off") {

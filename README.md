@@ -34,9 +34,9 @@ Le pipeline est fonctionnel sous les distributions de Linux.
 
 
 3. Fichier complémentaire nécessaire :
-    - Fichier GTF : Annotation
-    - Fichier FNA : Index STAR
-    - Fichier XLS : Métadonnée
+    - Fichier GTF : [Annotation pour Aedes albopictus](https://ftp.ncbi.nlm.nih.gov/genomes/all/annotation_releases/7160/102/GCF_006496715.1_Aalbo_primary.1/GCF_006496715.1_Aalbo_primary.1_genomic.gtf.gz)
+    - Fichier FNA : [Pour l'index STAR pour Aedes albopictus](https://ftp.ncbi.nlm.nih.gov/genomes/all/annotation_releases/7160/102/GCF_006496715.1_Aalbo_primary.1/GCF_006496715.1_Aalbo_primary.1_genomic.fna.gz)
+    - Fichier XLS : Métadonnée (voir dossier data/ pour Aedes albopictus)
 
 4. Autre : 
 Des containers Docker et Singularity ont également été élaboré en vue de permettre aux utilisateurs de lancer le pipeline sans avoir à installer toutes les dépendances nécessaires de la partie 2. Voir la dernière section de "Usage" pour plus de détails.
