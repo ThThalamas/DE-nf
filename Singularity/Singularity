@@ -1,4 +1,4 @@
-From:lipinskiboris/de-nf
+From:lipinskiboris/de-nf:latest
 Bootstrap:docker
 
 %labels
