@@ -75,7 +75,7 @@ process Mapping{
       --genomeFastaFiles !{FNA} \
       --sjdbGTFfile !{GTF} \
       --sjdbOverhang 74 \
-      --genomeSAsparseD 24
+      --genomeSAsparseD 12
 
     mkdir data/
     mv *gz data/
