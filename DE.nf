@@ -38,14 +38,14 @@ if (params.help) {
 // -- Path :
 params.input = null
 params.output = null
-params.GTF = null
+params.GTF = ""
 //params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.gtf"
 
 // -- Option :
 params.R = "off"
 params.thread = 1
 params.STAR_Index = "off"
-params.FNA = null
+params.FNA = ""
 //params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
 params.metadata = null
 //params.metadata = "!{baseDir}/data/Metadata.xls"
