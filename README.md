@@ -1,8 +1,8 @@
 # DE-nf  : Pipeline V1.0
 ## Un pipeline nextflow pour réaliser une analyse d'expression différentielle RNAseq sur un ensemble d'individus.
-#
 [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/lipinskiboris/de-nf/)
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/)
+#
 ![Workflow representation](analyses-nf.png)
 #
 
