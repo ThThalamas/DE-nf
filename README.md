@@ -62,7 +62,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 * #### Paramètres obligatoires complémentaires pour l'index STAR :
     | Nom       | Exemple | Description     |
     |-----------|---------|-----------------|
-    | --STAR_Index | /data/STARIndex | Chemin vers le dossier où se trouve l'index STAR à utiliser pour le pipeline. Si cette option n'est pas utilisée, merci de vous assurer de fournir l'option --FNA en plus de l'option --GTF pour réaliser l'index STAR. Par défaut, off. |
+    | --STAR_Index | /data/STARIndex | Chemin vers le dossier où se trouve l'index STAR à utiliser pour le pipeline. Si cette option n'est pas utilisée, merci de vous assurer de fournir l'option --FNA en plus de l'option --GTF pour réaliser l'index STAR. Par défaut, null. |
     | --FNA     | /data/fichier.fna | Chemin où se trouve le fichier .fna à fournir obligatoirement pour réaliser l'index STAR si l'option --STAR_Index n'est pas fourni. |
 
 

@@ -38,15 +38,13 @@ if (params.help) {
 // -- Path :
 params.input = null
 params.output = null
-params.GTF = ""
-//params.GTF = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.gtf"
+params.GTF = null
 
 // -- Option :
 params.R = "off"
 params.thread = 1
 params.STAR_Index = null
 params.FNA = params.STAR_Index
-//params.FNA = "/home/boris/Bureau/projet/projetS2/data/GCF_006496715.1_Aalbo_primary.1_genomic.fna"
 params.metadata = null
 //params.metadata = "!{baseDir}/data/Metadata.xls"
 
@@ -66,7 +64,7 @@ process Mapping{
   file "*Log*" into Mapping_Log
   
   shell:
-  if(params.STAR_Index=="off") {
+  if(params.STAR_Index==null) {
     '''
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
