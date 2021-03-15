@@ -58,8 +58,8 @@ process Mapping{
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
-  file GTF from Channel.fromPath(params.GTF).collect()
-  file FNA from Channel.fromPath(params.FNA).collect()
+  //file GTF from Channel.fromPath(params.GTF).collect()
+  //file FNA from Channel.fromPath(params.FNA).collect()
 
   output:
   file "*Aligned.out.sam" into Mapping_sam
