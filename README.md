@@ -62,7 +62,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 * #### Paramètres obligatoires complémentaires pour l'index STAR :
     | Nom       | Exemple | Description     |
     |-----------|---------|-----------------|
-    | --STAR_Index | /data/STARIndex/ | Chemin vers le dossier où se trouve l'index STAR à utiliser pour le pipeline. Si cette option n'est pas utilisée, merci de vous assurer de fournir l'option --FNA en plus de l'option --GTF pour réaliser l'index STAR. Par défaut, off. |
+    | --STAR_Index | /data/STARIndex | Chemin vers le dossier où se trouve l'index STAR à utiliser pour le pipeline. Si cette option n'est pas utilisée, merci de vous assurer de fournir l'option --FNA en plus de l'option --GTF pour réaliser l'index STAR. Par défaut, off. |
     | --FNA     | /data/fichier.fna | Chemin où se trouve le fichier .fna à fournir obligatoirement pour réaliser l'index STAR si l'option --STAR_Index n'est pas fourni. |
 
 
@@ -112,7 +112,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 3. Dans le cas où toutes les dépendances sont installées localement et vous souhaitez utiliser votre propre index STAR pour l'analyse, vous pouvez suivre cette procédure. Attention pour des raisons de compatibilité, l'index ajouté avec l'option --STAR_Index doit être réalisé avec la même version de STAR que celle utilisée pour l'alignement.
 
   ```
-  sudo nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --STAR_Index /data/STARIndex/ --output /output/"
+  sudo nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --STAR_Index /data/STARIndex --output /output/"
   ```
 
 
