@@ -58,6 +58,8 @@ process Mapping{
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
+  file GTF from Channel.fromPath(params.GTF+'*').collect()
+  file FNA from Channel.fromPath(params.FNA+'*').collect()
 
   output:
   file "*Aligned.out.sam" into Mapping_sam
@@ -70,8 +72,8 @@ process Mapping{
     STAR --runThreadN !{params.thread} \
       --runMode genomeGenerate \
       --genomeDir STARIndex_last/ \
-      --genomeFastaFiles !{params.FNA} \
-      --sjdbGTFfile !{params.GTF} \
+      --genomeFastaFiles !{FNA} \
+      --sjdbGTFfile !{GTF} \
       --sjdbOverhang 74 \
       --genomeSAsparseD 12
 
