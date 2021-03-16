@@ -49,6 +49,28 @@ params.metadata = null
 
 
 // -- Pipeline :
+process multiQC{ 
+  publishDir params.output+'/QC/', mode: 'copy'
+  
+  input:
+  file data from Channel.fromPath(params.input+'*').collect()
+
+  output:
+  file "*.htlm" into result_QC
+  
+  shell:
+  '''
+  #Multi QC analysis
+  files=(*)
+  for file in *; do
+    fastqc $file
+  done
+  multiqc .
+  '''
+}
+
+
+
 process Mapping{ 
   publishDir params.output+'/mapping/', mode: 'copy'
   cpus params.thread
