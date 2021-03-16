@@ -203,12 +203,13 @@ if(params.R=="on"){
     
     input:
     file data from Result.collect()
+    file metadata from Channel.fromPath(params.metadata).collect()
     
     output:
     file "*.pdf" into Result_DE
     
     shell:
     '''
-    Rscript !{baseDir}/bin/DE.r finale.txt !{params.metadata}
+    Rscript !{baseDir}/bin/DE.r finale.txt !{metadata}
     '''
     }}
