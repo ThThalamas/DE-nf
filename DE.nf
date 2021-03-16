@@ -122,18 +122,26 @@ process Mapping{
     '''
   } else {
     '''
+    mkdir data/
+    mv *gz data/
+    cd data/ 
+
     #Mapping analyse :
     ulimit -v 27598325157
     for file in *; do
       STAR \
       --runThreadN !{params.thread} \
-      --genomeDir !{FNA} \
+      --genomeDir ../!{FNA} \
       --readFilesCommand gunzip -c \
       --readFilesIn $file \
       --outFileNamePrefix $file \
       --outSAMunmapped Within
     done
     
+    mv * ../.
+    cd ..
+    rm -r data/
+
     mkdir other
     mv *Log* other/
     '''
