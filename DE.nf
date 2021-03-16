@@ -87,6 +87,7 @@ process Mapping{
   if(params.STAR_Index==null) {
     '''
     mkdir mapping
+    mkdir mapping/sam
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
       --runMode genomeGenerate \
@@ -135,8 +136,9 @@ process Mapping{
     done
 
     mkdir mapping
+    mkdir mapping/sam
     mv *Log* mapping/
-    mv *Aligned.out.sam mapping/
+    mv *Aligned.out.sam mapping/sam/
     '''
     }}
 
@@ -155,7 +157,7 @@ process Intersection{
   shell:
   '''
   #Intersection analyse :
-  for file in mapping/*; do
+  for file in mapping/sam/*; do
     htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ../${file}_intersect.txt
   done
   '''}
