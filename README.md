@@ -40,7 +40,7 @@ Le pipeline est fonctionnel sous les distributions de Linux.
     - Fichier XLS : Métadonnée (voir dossier data/ pour Aedes albopictus)
 
 4. Autre : 
-Des containers Docker et Singularity ont également été élaboré en vue de permettre aux utilisateurs de lancer le pipeline sans avoir à installer toutes les dépendances nécessaires de la partie 2. Voir la dernière section de "Usage" pour plus de détails.
+Des containers Docker et Singularity ont également été élaboré en vue de permettre aux utilisateurs de lancer le pipeline sans avoir à installer toutes les dépendances nécessaires de la partie 2. Les installations des outils [Docker](https://docs.docker.com/engine/install/ubuntu/) et [Singularity](https://singularity.lbl.gov/install-linux) sont nécessaire au préalable. Voir la dernière section de "Usage" pour plus de détails.
 
 
 
@@ -85,7 +85,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 1. Lancement basique du pipeline, dans le cas où toutes les dépendances sont installées localement.
 
   ```
-  sudo nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/"
+  nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/
   ```
   
   La matrice de comptage résultant correspond au fichier finale.txt dans le dossier "/output/merge/finale.txt". 
@@ -104,7 +104,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 
 2. Vous pouvez également lancer le pipeline avec la réalisation d'une analyse d'expression différentielle par défaut sur R de façon automatique, via l'option --R.
   ```
-  sudo nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --R on --output /output/"
+  nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --R on --metadata /data/metadata.xls --output /output/
   ```
   Un rapport sera mis à votre disposition dans le dossier "/output/R/". 
 
@@ -113,7 +113,7 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 3. Dans le cas où toutes les dépendances sont installées localement et vous souhaitez utiliser votre propre index STAR pour l'analyse, vous pouvez suivre cette procédure. Attention pour des raisons de compatibilité, l'index ajouté avec l'option --STAR_Index doit être réalisé avec la même version de STAR que celle utilisée pour l'alignement.
 
   ```
-  sudo nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --STAR_Index /data/STARIndex --output /output/"
+  nextflow run Lipinski-B/DE-nf --input /input/ --GTF /data/fichier.gtf --STAR_Index /data/STARIndex --output /output/
   ```
 
 
@@ -121,12 +121,12 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
 4. Enfin vous pouvez lancer le pipeline via l'utilisation de containers Docker/Singularity via l'option -profile.
   
   ```
-  sudo nextflow run Lipinski-B/DE-nf -profile docker --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/"
+  nextflow run Lipinski-B/DE-nf -profile docker --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/
   ```
   ou
 
   ```
-  sudo nextflow run Lipinski-B/DE-nf -profile singularity --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/"
+  nextflow run Lipinski-B/DE-nf -profile singularity --input /input/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/
   ```
 
 ## Description détaillé

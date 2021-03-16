@@ -3,30 +3,29 @@
 params.help = null
 
 log.info ""
-log.info "--------------------------------------------------------"
+log.info "---------------------------------------------------------------------"
 log.info "  DE 1.0 : Pipeline RNAseq for the Differential Expression analysis. "
-log.info "--------------------------------------------------------"
+log.info "---------------------------------------------------------------------"
 
 if (params.help) {
-    log.info "--------------------------------------------------------"
-    log.info "  USAGE : sudo nextflow run Lipinski-B/DE-nf --input /data/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/"
-    log.info "--------------------------------------------------------"
+    log.info "------------------------------------------------------------------------------------------------------------------------------"
+    log.info "  USAGE : nextflow run Lipinski-B/DE-nf --input /data/ --GTF /data/fichier.gtf --FNA /data/fichier.fna --output /output/ "
+    log.info "------------------------------------------------------------------------------------------------------------------------------"
     log.info ""
-    log.info "nextflow run DE.nf [-r vX.X -profile singularity] [OPTIONS]"
+    log.info "nextflow run Lipinski-B/DE-nf [-r vX.X -profile docker/singularity] [OPTIONS]"
     log.info ""
     log.info "Mandatory arguments:"
     log.info ""
-    log.info "--input                      FOLDER                      Folder where you can find your data (fasta/fastq files)."
+    log.info "--input                       FOLDER                      Folder where you can find your data (fasta/fastq files)."
     log.info "--output                      FOLDER                      Folder where you want to find your result."
-    log.info "--GTF                      FILE                      Path where you can find the annotation to use."
+    log.info "--GTF                         FILE                        Path where you can find the annotation to use."
     log.info ""
     log.info "Optional arguments:"
-    log.info "--<OPTION>                      <TYPE>                      <DESCRIPTION>"
-    log.info "--STAR_Index                      FOLDER                      Folder where you can find the STAR index. If this option is not used, please make sure to provide the --FNA option in addition to the --GTF option to perform the STAR index"
-    log.info "--FNA                      FILE                      Path where you can find the FNA file to use for the STAR index."
-    log.info "--R                      STRING                      on/'off : Chose to use or not the standard R analyses from the pipeline."
-    log.info "--metadata                      FILE                      Path where you can find the XLS file to use as metadata for the R analyse. Mandatory is the option --R in on."
-    log.info "--thread                      INT                      Number of thread to use."
+    log.info "--STAR_Index                  FOLDER                      Folder where you can find the STAR index. If this option is not used, please make sure to provide the --FNA option in addition to the --GTF option to perform the STAR index"
+    log.info "--FNA                         FILE                        Path where you can find the FNA file to use for the STAR index."
+    log.info "--R                           STRING                      on/'off : Chose to use or not the standard R analyses from the pipeline."
+    log.info "--metadata                    FILE                        Path where you can find the XLS file to use as metadata for the R analyse. Mandatory is the option --R in on."
+    log.info "--thread                      INT                         Number of thread to use."
   
     exit 0
 } else {
