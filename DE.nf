@@ -162,7 +162,7 @@ process Intersection{
   shell:
   '''
   #Intersection analyse :
-  for file in *; do
+  for file in *.sam; do
     htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ${file}_intersect.txt
   done
   '''}
