@@ -72,7 +72,7 @@ process MultiQC{
 
 
 process Mapping{ 
-  publishDir params.output+'/mapping/', mode: 'copy'
+  publishDir params.output+'/', mode: 'copy'
   cpus params.thread
   
   input:
@@ -81,12 +81,12 @@ process Mapping{
   file FNA from Channel.fromPath(params.FNA).collect()
 
   output:
-  file "*Aligned.out.sam" into Mapping_sam
-  file "*Log*" into Mapping_Log
+  file "mapping/" into Mapping_sam
   
   shell:
   if(params.STAR_Index==null) {
     '''
+    mkdir mapping
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
       --runMode genomeGenerate \
@@ -115,6 +115,10 @@ process Mapping{
     mv * ../.
     cd ..
     rm -r data/
+
+    mv STARIndex_last/ mapping/
+    mv *Log* mapping/
+    mv *Aligned.out.sam mapping/
     '''
   } else {
     '''
@@ -129,6 +133,10 @@ process Mapping{
       --outFileNamePrefix $file \
       --outSAMunmapped Within
     done
+    
+    mkdir mapping
+    mv *Log* mapping/
+    mv *Aligned.out.sam mapping/
     '''
     }}
 
