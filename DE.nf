@@ -133,7 +133,7 @@ process Mapping{
       --outFileNamePrefix $file \
       --outSAMunmapped Within
     done
-    
+
     mkdir mapping
     mv *Log* mapping/
     mv *Aligned.out.sam mapping/
@@ -155,8 +155,8 @@ process Intersection{
   shell:
   '''
   #Intersection analyse :
-  for file in *; do
-    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ${file}_intersect.txt
+  for file in mapping/*; do
+    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ../${file}_intersect.txt
   done
   '''}
 
