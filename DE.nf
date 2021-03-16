@@ -119,7 +119,7 @@ process Mapping{
 
     mv STARIndex_last/ mapping/
     mv *Log* mapping/
-    mv *Aligned.out.sam mapping/
+    mv *Aligned.out.sam mapping/sam/
     '''
   } else {
     '''
