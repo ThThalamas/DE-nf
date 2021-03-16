@@ -10,7 +10,7 @@ dependencies:
   - htseq=0.13.5
   - samtools=1.9
   - fastqc=0.11.9
-  - multiqc=1.8
+  - multiqc=1.10
   - bioconductor-deseq2=1.30.0-0
   - r-pheatmap=1.0.12
   - r-RColorBrewer=1.1-2

@@ -3,9 +3,9 @@
 params.help = null
 
 log.info ""
-log.info "---------------------------------------------------------------------"
-log.info "  DE 1.0 : Pipeline RNAseq for the Differential Expression analysis. "
-log.info "---------------------------------------------------------------------"
+log.info "--------------------------------------------------------------------"
+log.info "  DE 1.0 : Pipeline RNAseq for the Differential Expression analysis."
+log.info "--------------------------------------------------------------------"
 
 if (params.help) {
     log.info "------------------------------------------------------------------------------------------------------------------------------"
@@ -49,14 +49,15 @@ params.metadata = null
 
 
 // -- Pipeline :
-process multiQC{ 
+process MultiQC{ 
   publishDir params.output+'/QC/', mode: 'copy'
   
   input:
   file data from Channel.fromPath(params.input+'*').collect()
 
   output:
-  file "*.htlm" into result_QC
+  file "*fastqc.html" into result_QC1
+  file "multiqc*" into result_QC2
   
   shell:
   '''
@@ -66,8 +67,7 @@ process multiQC{
     fastqc $file
   done
   multiqc .
-  '''
-}
+  '''}
 
 
 
@@ -130,13 +130,13 @@ process Mapping{
       --outSAMunmapped Within
     done
     '''
-    }
-}
+    }}
 
 
 process Intersection{ 
   publishDir params.output+'/intersect/', mode: 'copy'
-  
+  cpus params.thread
+
   input:
   file data from Mapping_sam
   file GTF from Channel.fromPath(params.GTF).collect()
@@ -150,8 +150,7 @@ process Intersection{
   for file in *; do
     htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ${file}_intersect.txt
   done
-  '''
-}
+  '''}
 
 process Merge_result{ 
   publishDir params.output+'/merge/', mode: 'copy'
@@ -180,12 +179,11 @@ process Merge_result{
 
   paste -d "\t" * > finale.txt
   rm AAAA.txt
-  '''
-}
+  '''}
 
 
 if(params.R=="on"){
-  process DE{ 
+  process DEA{ 
     publishDir params.output+'/R/', mode: 'copy'
     
     input:
@@ -198,5 +196,4 @@ if(params.R=="on"){
     '''
     Rscript !{baseDir}/bin/DE.r finale.txt !{params.metadata}
     '''
-    }
-}
+    }}
