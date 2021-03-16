@@ -157,9 +157,12 @@ process Intersection{
   shell:
   '''
   #Intersection analyse :
-  for file in mapping/sam/*; do
-    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ../${file}_intersect.txt
+  cd mapping/sam/
+  for file in *; do
+    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ${file}_intersect.txt
   done
+  mv *.txt ../../.
+  cd ../../.
   '''}
 
 process Merge_result{ 
