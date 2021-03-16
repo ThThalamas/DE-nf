@@ -1,5 +1,5 @@
 #!/usr/bin/Rscript
-.libPaths("/home/boris/R/x86_64-pc-linux-gnu-library/4.0")
+#.libPaths("/home/boris/R/x86_64-pc-linux-gnu-library/4.0")
 library(DESeq2)
 library(edgeR)
 library(pheatmap)
