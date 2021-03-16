@@ -15,7 +15,7 @@ Voici un résumé de la méthode :
 - Alignement des reads sur le génome de référence via STAR.
 - Intersection des fichiers SAM sur l'annotation de référence via htseq-count.
 - Élaboration de la matrice finale de comptage brute.
-- Analyse d'expression différentielle sur R via le package DESeq2 (optionnel).
+- Analyse d'expression différentielle sur R via le package DESeq2.
 
 Veuillez consulter la section "Usage" pour tester le pipeline avec un ensemble de données.
 
@@ -31,7 +31,8 @@ Le pipeline est fonctionnel sous les distributions de Linux.
     - multiqc (version 1.8)
     - htseq-count (version 0.13.5)
     - R (version 4.0.3)
-    - Package DESeq2 (version 1.30.0-0)
+    - Package R : DESeq2, edgeR, pheatmap, RColorBrewer, ggbeeswarm, genefilter, biomaRt, stringr, ggplot2, NMF, tidyverse.
+ 
 
 
 3. Fichier complémentaire nécessaire :

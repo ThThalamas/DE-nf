@@ -72,7 +72,7 @@ process MultiQC{
 
 
 process Mapping{ 
-  publishDir params.output+'/', mode: 'copy'
+  publishDir params.output+'/mapping/', mode: 'copy'
   cpus params.thread
   
   input:
@@ -81,13 +81,12 @@ process Mapping{
   file FNA from Channel.fromPath(params.FNA).collect()
 
   output:
-  file "mapping/" into Mapping_sam
+  file "*Aligned.out.sam" into Mapping_sam
+  file "other/" into Mapping_Log
   
   shell:
   if(params.STAR_Index==null) {
     '''
-    mkdir mapping
-    mkdir mapping/sam
     mkdir STARIndex_last/
     STAR --runThreadN !{params.thread} \
       --runMode genomeGenerate \
@@ -117,9 +116,9 @@ process Mapping{
     cd ..
     rm -r data/
 
-    mv STARIndex_last/ mapping/
-    mv *Log* mapping/
-    mv *Aligned.out.sam mapping/sam/
+    mkdir other
+    mv STARIndex_last/ other/
+    mv *Log* other/
     '''
   } else {
     '''
@@ -134,11 +133,9 @@ process Mapping{
       --outFileNamePrefix $file \
       --outSAMunmapped Within
     done
-
-    mkdir mapping
-    mkdir mapping/sam
-    mv *Log* mapping/
-    mv *Aligned.out.sam mapping/sam/
+    
+    mkdir other
+    mv *Log* other/
     '''
     }}
 
@@ -157,12 +154,9 @@ process Intersection{
   shell:
   '''
   #Intersection analyse :
-  cd mapping/sam/
   for file in *; do
-    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file ../../!{GTF} > ${file}_intersect.txt
+    htseq-count --stranded=yes --nprocesses=!{params.thread} --mode=union $file !{GTF} > ${file}_intersect.txt
   done
-  mv *.txt ../../.
-  cd ../../.
   '''}
 
 process Merge_result{ 
