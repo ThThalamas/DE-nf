@@ -6,6 +6,7 @@ channels:
   - defaults
 
 dependencies:
+  - r-base=4.0.3
   - star=2.7.7a
   - htseq=0.13.5
   - samtools=1.9
