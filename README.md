@@ -131,17 +131,17 @@ Des containers Docker et Singularity ont également été élaboré en vue de pe
   ```
 
 ## Description détaillé
-- process QC
-- process création d'un index STAR
-- process Mapping STAR + exeple de résultat dans le dossier output/
-- process Intersection htseq-count + exeple de résultat dans le dossier output/
-- process DE analyses sur R + exeple de résultat dans le dossier output/
+- process QC (FastQC - MultiQC)
+- process création d'un index (STAR)
+- process Mapping (STAR) + exemple de résultat dans le dossier output/
+- process Intersection (htseq-count) + exemple de résultat dans le dossier output/
+- process DE analyses avec R + exemple de résultat dans le dossier output/
 
 
 ## Contributions
 
   | Name      | Email | Description     |
   |-----------|-------|-----------------|
-  | Mandier Céline | celine.mandier@etu.univ-lyon1.fr | Developeur à contacter pour support |
-  | Thalamas Thibaut | thibaut.thalamas@etu.univ-lyon1.fr | Developeur à contacter pour support |
-  | Lipinski Boris    | boris.lipinski@etu.univ-lyon1.fr | Developeur à contacter pour support |
+  | Mandier Céline | celine.mandier@gmail.com | Développeur à contacter pour support |
+  | Thalamas Thibaut | th.thalamas@gmail.com | Développeur à contacter pour support |
+  | Lipinski Boris    | boris.lipinski@etu.univ-lyon1.fr | Développeur à contacter pour support |
